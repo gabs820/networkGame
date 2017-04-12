@@ -1,5 +1,5 @@
 /**
- * NimClientHandler.java
+ * MassChaosClientHandler.java
  *
  * This class handles communication between the client
  * and the server.  It runs in a separate thread but has a
