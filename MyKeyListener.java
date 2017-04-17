@@ -10,18 +10,28 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.*;
 public class MyKeyListener extends JPanel implements ActionListener, KeyListener {
 
 
 	Timer t = new Timer(5, this);
 	int x = 0, y = 0;
 	double velX = 0, velY = 0;
+	boolean shooting;
+	double firingTimer;
+	double firingDelay;
+	public static ArrayList<Bullet> bullets;
+	private Graphics2D g;
 	
 	public MyKeyListener() {
 		t.start();
 		addKeyListener(this);// to JPanel
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		shooting = false;
+		firingTimer = System.nanoTime();
+		firingDelay = 200;
+		bullets = new ArrayList<Bullet>();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -37,7 +47,19 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		repaint();
 		x += velX;
 		y += velY;
-		System.out.println("x vel: " + velX + "y vel: " + velY);
+		//System.out.println("x vel: " + velX + "y vel: " + velY);
+		//for(int i = 0; i < bullets.size(); i++){
+		//	bullets.get(i).paintComponent(g);
+		//}
+		if(shooting){
+			double elapsed = (System.nanoTime() - firingTimer) /1000000;
+			
+		if(elapsed > firingDelay){
+			System.out.println("shooting!");
+			bullets.add(new Bullet(270, x, y));
+			firingTimer = System.nanoTime();
+		}
+		}
 	}
 	
 	// For some reason negative velocity seems to be faster??
@@ -56,7 +78,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	public void right() {
 		velY = 0;
 		velX = 1.5;
-	}
+	} 
 	
 	public void keyPressed(KeyEvent e){
 		int code = e.getKeyCode();
@@ -72,9 +94,19 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		if (code == KeyEvent.VK_RIGHT) {
 			right();
 		}
+		if(code == KeyEvent.VK_SPACE){
+			shooting = true;
+			System.out.println(shooting);
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		int code = e.getKeyCode();
+		if(code == KeyEvent.VK_SPACE){
+			shooting = false;
+		}
 	}
 	
 	// Need to include these because of the implements KeyListener
 	public void keyTyped(KeyEvent e) {}
-	public void keyReleased(KeyEvent e) {}
 }
