@@ -27,6 +27,7 @@ public class MassChaosClientListener implements Runnable
        		 // Wait for data from the server.  If received, output it.
 		try
 		{
+			MoveBall gameObject = new MoveBall();
 			BufferedReader serverInput = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
 			while (true)
 			{

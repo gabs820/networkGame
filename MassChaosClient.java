@@ -21,7 +21,11 @@ public class MassChaosClient
 
 			System.out.println("Connection made.");
 
-
+			MassChaosClientListener listener = new MassChaosClientListener(connectionSock);
+			Thread theThread = new Thread(listener);
+			theThread.start();
+			
+			
 			// Read input from the keyboard and send it to everyone else.
 			// The only way to quit is to hit control-c, but a quit command
 			// could easily be added.
