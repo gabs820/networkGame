@@ -25,13 +25,14 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	
 	public MyKeyListener() {
 		t.start();
-		addKeyListener(this);// to JPanel
+		//addKeyListener(this);// to JPanel
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		shooting = false;
 		firingTimer = System.nanoTime();
 		firingDelay = 200;
 		bullets = new ArrayList<Bullet>();
+		addKeyListener(this);// to JPanel
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -48,18 +49,22 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		x += velX;
 		y += velY;
 		//System.out.println("x vel: " + velX + "y vel: " + velY);
-		//for(int i = 0; i < bullets.size(); i++){
-		//	bullets.get(i).paintComponent(g);
-		//}
 		if(shooting){
 			double elapsed = (System.nanoTime() - firingTimer) /1000000;
-			
 		if(elapsed > firingDelay){
 			System.out.println("shooting!");
-			bullets.add(new Bullet(270, x, y));
+			bullets.add(new Bullet(0, x, y));
 			firingTimer = System.nanoTime();
 		}
 		}
+		if(bullets.size()>0)
+		{
+			for(int i = 0; i < bullets.size(); i++){
+				bullets.get(i).update();
+				//bullets.get(i).paintComponent(g);
+			}
+		}
+		
 	}
 	
 	// For some reason negative velocity seems to be faster??
@@ -96,7 +101,6 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		}
 		if(code == KeyEvent.VK_SPACE){
 			shooting = true;
-			System.out.println(shooting);
 		}
 	}
 
@@ -109,4 +113,49 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	
 	// Need to include these because of the implements KeyListener
 	public void keyTyped(KeyEvent e) {}
+}
+
+class Bullet extends JPanel {
+
+	double x;
+	double y;
+	int r;
+	double dx;
+	double dy;
+	double radius;
+	double speed;
+	
+	public Bullet(double angle, int startx, int starty){
+		
+		this.x = startx;
+		this.y = starty;
+		r = 2;
+		radius = Math.toRadians(angle);
+		dx = Math.cos(radius);
+		dy = Math.sin(radius);
+	}
+	
+	public void update(){
+		x += dx;
+		y += dy;
+		repaint();
+		System.out.println("1. X: "+x+"; Y:"+y );
+		if( x<-r || x > 800 + r 
+		|| y < -r || y > 600 + r){
+			//return 0;
+		}
+		//return false;			
+	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.fillOval((int)x, (int) y, 10, 10);
+		
+	}
+
+	
+	
 }
