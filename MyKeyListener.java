@@ -22,38 +22,45 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	double firingDelay;
 	public static ArrayList<Bullet> bullets;
 	private Graphics2D g;
+	int firingAngle=0; //sets bullet direction to equal player direction
 	
 	public MyKeyListener() {
 		t.start();
-		//addKeyListener(this);// to JPanel
+		addKeyListener(this);// to JPanel
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
 		shooting = false;
 		firingTimer = System.nanoTime();
 		firingDelay = 200;
 		bullets = new ArrayList<Bullet>();
-		addKeyListener(this);// to JPanel
 	}
 	
 	public void paintComponent(Graphics g) {
+		//paint the player
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
             RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.fillOval(x, y, 30, 30);
-		
+
+		//paint each bullet
+		for (int i = 0; i < bullets.size(); ++i) {
+			Bullet b = (Bullet)bullets.get(i);
+			if(b.isVisible())
+			{
+				g.fillOval(b.getX(), b.getY(), 10, 10);
+			}
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		repaint();
 		x += velX;
-		y += velY;
-		//System.out.println("x vel: " + velX + "y vel: " + velY);
+		y += velY;		
 		if(shooting){
 			double elapsed = (System.nanoTime() - firingTimer) /1000000;
+			//Balance out the shooting rate.
 		if(elapsed > firingDelay){
-			System.out.println("shooting!");
-			bullets.add(new Bullet(0, x, y));
+			bullets.add(new Bullet(firingAngle, x, y));
 			firingTimer = System.nanoTime();
 		}
 		}
@@ -61,28 +68,31 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		{
 			for(int i = 0; i < bullets.size(); i++){
 				bullets.get(i).update();
-				//bullets.get(i).paintComponent(g);
 			}
 		}
-		
+		repaint();
 	}
 	
 	// For some reason negative velocity seems to be faster??
 	public void up() {
 		velY = -0.5;
 		velX = 0;
+		firingAngle = 270;
 	}
 	public void down() {
 		velY = 1.5;
 		velX = 0;
+		firingAngle = 90;
 	}
 	public void left() {
 		velY = 0;
 		velX = -0.5;
+		firingAngle = 180;
 	}
 	public void right() {
 		velY = 0;
 		velX = 1.5;
+		firingAngle = 0;
 	} 
 	
 	public void keyPressed(KeyEvent e){
@@ -117,45 +127,57 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 
 class Bullet extends JPanel {
 
-	double x;
-	double y;
+	double x; double y;
 	int r;
-	double dx;
-	double dy;
+	double dx; double dy;
 	double radius;
 	double speed;
+	boolean visible; //responsible for painting
+	
+	public Bullet()
+	{
+		super();
+	}
 	
 	public Bullet(double angle, int startx, int starty){
-		
+		this();
 		this.x = startx;
 		this.y = starty;
+		visible = true;
 		r = 2;
 		radius = Math.toRadians(angle);
-		dx = Math.cos(radius);
+		dx = Math.cos(radius); //sets angle of firing
 		dy = Math.sin(radius);
 	}
 	
-	public void update(){
-		x += dx;
-		y += dy;
-		repaint();
-		System.out.println("1. X: "+x+"; Y:"+y );
-		if( x<-r || x > 800 + r 
-		|| y < -r || y > 600 + r){
-			//return 0;
-		}
-		//return false;			
+	//getters
+	public int getX()
+	{
+		return (int)x;
+	}
+	public int getY()
+	{
+		return (int)y;
+	}
+	public boolean isVisible()
+	{
+		return visible;
 	}
 	
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.fillOval((int)x, (int) y, 10, 10);
+	public void update(){
+		x += dx*2; //bullet moves twice the speed of the player.
+		y += dy*2;
+		
+		//stop drawing if beyond these.
+		if(x>800)		
+		{
+			visible = false;
+		}
+		if(y>600)
+		{
+			visible = false;
+		}
 		
 	}
-
-	
 	
 }
