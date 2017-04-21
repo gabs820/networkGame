@@ -48,4 +48,5 @@ Compile MassChaosClient.java and run MassChaosClient.class
 To test player movement, compile MoveBall.java and MyKeyListener.java
 Run MoveBall.class with java MoveBall
 Use the arrow keys to move
+Use the spacebar to shoot a ball in the direction of your movement
 //each has their own connection etc
