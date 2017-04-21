@@ -45,5 +45,7 @@ Compile MassChaosClient.java and run MassChaosClient.class
 //enemies eliminated
 
 ***Player Movement***
-//files that do this
+To test player movement, compile MoveBall.java and MyKeyListener.java
+Run MoveBall.class with java MoveBall
+Use the arrow keys to move
 //each has their own connection etc
