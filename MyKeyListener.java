@@ -53,6 +53,10 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 			{
 				g.fillOval(b.getX(), b.getY(), 10, 10);
 			}
+			if(!b.isVisible()) // deletes bullet out of array list.
+			{
+				bullets.remove(i);
+			}
 		}
 	}
 	
@@ -171,12 +175,12 @@ class Bullet extends JPanel {
 		x += dx*2; //bullet moves twice the speed of the player.
 		y += dy*2;
 		
-		//stop drawing if beyond these.
-		if(x>800)		
+		//stop drawing if beyond these pixel dimensions.
+		if(x>800 || x<-1)		
 		{
 			visible = false;
 		}
-		if(y>600)
+		if(y>600|| y < -1)
 		{
 			visible = false;
 		}
