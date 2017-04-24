@@ -11,6 +11,7 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.util.*;
+import java.util.Random;
 public class MyKeyListener extends JPanel implements ActionListener, KeyListener {
 
 
@@ -25,6 +26,8 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	int firingAngle=0; //sets bullet direction to equal player direction
 	
 	public MyKeyListener() {
+		x = (int)(Math.random() * 800 + 1); //generates a random starting position.
+		y = (int)(Math.random() * 600 + 1);
 		t.start();
 		addKeyListener(this);// to JPanel
 		setFocusable(true);
