@@ -11,6 +11,5 @@ public class MoveBall {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(800,600);
-		
 	}
 }

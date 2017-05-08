@@ -26,8 +26,9 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	int firingAngle=0; //sets bullet direction to equal player direction
 	
 	public MyKeyListener() {
-		x = (int)(Math.random() * 800 + 1); //generates a random starting position.
-		y = (int)(Math.random() * 600 + 1);
+		x = (int)(Math.random() * 750 + 1); //generates a random starting position.
+		y = (int)(Math.random() * 500 + 1);
+		System.out.println("X: "+x+" Y: "+y);
 		t.start();
 		addKeyListener(this);// to JPanel
 		setFocusable(true);
@@ -61,8 +62,23 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		x += velX;
-		y += velY;		
+		       
+		if(x<750)
+		{
+			x += velX;     
+		}
+		else
+		{
+			x-=velX;
+		}
+		if(y<500)
+		{
+			y += velY;		
+		}
+		else
+		{
+				y-=velY;
+		}
 		if(shooting){
 			double elapsed = (System.nanoTime() - firingTimer) /1000000;
 			//Balance out the shooting rate.
