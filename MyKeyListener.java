@@ -83,7 +83,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 			double elapsed = (System.nanoTime() - firingTimer) /1000000;
 			//Balance out the shooting rate.
 		if(elapsed > firingDelay){
-			bullets.add(new Bullet(firingAngle, x, y));
+			bullets.add(new Bullet(firingAngle, x+30, y+30));
 			firingTimer = System.nanoTime();
 		}
 		}
@@ -91,6 +91,11 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		{
 			for(int i = 0; i < bullets.size(); i++){
 				bullets.get(i).update();
+				if( bullets.get(i).getX() < (x+15) && bullets.get(i).getX() > (x-15) 
+					&& bullets.get(i).getY() < (y+15) && bullets.get(i).getY() > (y-15) )
+				{
+					System.out.println("SHOT!! " + x);
+				}
 			}
 		}
 		repaint();
@@ -190,7 +195,7 @@ class Bullet extends JPanel {
 	public void update(){
 		x += dx*2; //bullet moves twice the speed of the player.
 		y += dy*2;
-		
+
 		//stop drawing if beyond these pixel dimensions.
 		if(x>800 || x<-1)		
 		{
