@@ -24,11 +24,12 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	public static ArrayList<Bullet> bullets;
 	private Graphics2D g;
 	int firingAngle=0; //sets bullet direction to equal player direction
+	double timeStart;
+	double timeEnd;
 	
 	public MyKeyListener() {
 		x = (int)(Math.random() * 750 + 1); //generates a random starting position.
 		y = (int)(Math.random() * 500 + 1);
-		System.out.println("X: "+x+" Y: "+y);
 		t.start();
 		addKeyListener(this);// to JPanel
 		setFocusable(true);
@@ -37,6 +38,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		firingTimer = System.nanoTime();
 		firingDelay = 200;
 		bullets = new ArrayList<Bullet>();
+		timeStart = System.currentTimeMillis();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -94,7 +96,9 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 				if( bullets.get(i).getX() < (x+15) && bullets.get(i).getX() > (x-15) 
 					&& bullets.get(i).getY() < (y+15) && bullets.get(i).getY() > (y-15) )
 				{
-					System.out.println("SHOT!! " + x);
+					timeEnd = System.currentTimeMillis();
+					System.out.println("Game over! You survived for " +((timeEnd-timeStart)/1000)+ " seconds.");
+					System.exit(0);
 				}
 			}
 		}
