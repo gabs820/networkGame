@@ -1,14 +1,38 @@
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.io.DataOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
-public class MassChaosServer
-{
-	// Maintain list of all client sockets for broadcast
+import java.util.Scanner;
+import java.net.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MassChaosServer {
+	
+	
+	public static void main (String args[]) throws Exception {
+		
+		DatagramSocket serverSocket = new DatagramSocket(9876);
+		
+		byte[] receiveData = new byte[1024];
+		byte[] sendData = new byte[1024];
+		
+		while(true)
+		{
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			serverSocket.receive(receivePacket);
+			String sentence = new String(receivePacket.getData());
+			InetAddress IPAddress = receivePacket.getAddress();
+			int port = receivePacket.getPort();
+				String capitalizedSentence = sentence.toUpperCase();
+			sendData = capitalizedSentence.getBytes();
+			
+			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+			serverSocket.send(sendPacket);
+		}
+	}
+		
+}
+	
+	/*// Maintain list of all client sockets for broadcast
 	private ArrayList<Socket> socketList;
 
 	public MassChaosServer()
@@ -50,4 +74,39 @@ public class MassChaosServer
 		MassChaosServer server = new MassChaosServer();
 		server.getConnection();
 	}
-}
+	
+	private DatagramSocket socket;
+	private Game game;
+			
+	public MassChaosServer(Game game) {
+		this.game = game;
+		try {
+			this.socket = new DatagramSocket(7654);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public void run() {
+        while (true) {
+            byte[] data = new byte[1024];
+            DatagramPacket packet = new DatagramPacket(data, data.length);
+            try {
+                socket.receive(packet);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            this.parsePacket(packet.getData(), packet.getAddress(), packet.getPort());
+        }
+    }
+	
+	public void sendData(byte[] data, InetAddress ipAddress, int port) {
+		DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, port);
+		try {
+			this.socket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
+

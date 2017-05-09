@@ -1,13 +1,29 @@
-import java.net.Socket;
-import java.io.DataOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
 import java.util.Scanner;
+import java.net.*;
+import java.io.*;
 
 public class MassChaosClient
 {
-	public static void main(String[] args)
+
+	public static void main (String args[]) throws Exception 
+	{
+		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
+			DatagramSocket clientSocket = new DatagramSocket();
+			InetAddress IPAddress = InetAddress.getByName("localhost");
+			byte[] sendData = new byte[1024];
+			byte[] receiveData = new byte[1024];
+		  String sentence = inFromUser.readLine();
+		  sendData = sentence.getBytes();
+		  DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+		  clientSocket.send(sendPacket);
+		  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+		  clientSocket.receive(receivePacket);
+		  String modifiedSentence = new String(receivePacket.getData());
+		  System.out.println("FROM SERVER:" + modifiedSentence);
+		  clientSocket.close();
+	}
+	
+	/*public static void main(String[] args)
 	{
 		try
 		{
@@ -35,10 +51,52 @@ public class MassChaosClient
 				String data = keyboard.nextLine();
 				serverOutput.writeBytes(data + "\n");
 			}
+			
 		}
 		catch (IOException e)
 		{
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	private InetAddress ipAddress;
+	private DatagramSocket socket;
+	private Game game;
+			
+	public MassChaosClient(Game game, String ipAddress) {
+		this.game = game;
+		try {
+			this.socket = new DatagramSocket();
+			this.ipAddress = InetAddress.getByName (ipAddress);
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	
+	}
+	
+	public void run(){
+		while (true) {
+			byte [] data = new byte[1024];
+			DatagramPacket packet = new DatagramPacket(data, data.length);
+			try {
+				socket.receive(packet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			String message = new String(packet.getData());
+			System.out.println("SERVER > " + message); 
+		}
+	}
+	
+	public void sendData(byte [] data) {
+		DatagramPacket packet = new DatagramPacket(data, data.length, ipAddress, 7654);
+		try {
+			socket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
 }
+
