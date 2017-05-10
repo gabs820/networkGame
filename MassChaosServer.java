@@ -14,7 +14,7 @@ public class MassChaosServer {
 		
 		
 		//byte[] receiveData = new byte[1024];
-		byte[] sendData = new byte[1024];
+		//byte[] sendData = new byte[1024];
 		InetAddress IPAddress = null, IPAddress1 = null, IPAddress2 = null;
 		DatagramPacket receivePacket = null;
 		DatagramPacket sendPacket = null;
@@ -36,6 +36,8 @@ public class MassChaosServer {
 		while(true)
 		{
 			byte[] receiveData = new byte[1024];
+			byte[] sendData = new byte[1024];
+			
 			if (port == 0)
 			{
 				System.out.println("Server is running. Waiting for players to connect.");
@@ -101,6 +103,7 @@ public class MassChaosServer {
 				
 			} 
 		}
+		//serverSocket.close();
 		
 	}
 		

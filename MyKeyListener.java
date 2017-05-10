@@ -27,6 +27,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	double timeStart;
 	double timeEnd;
 	public static ArrayList<int[]> others;
+	boolean isGameOver;
 	
 	public MyKeyListener() {
 		x = (int)(Math.random() * 750 + 1); //generates a random starting position.
@@ -40,6 +41,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		firingDelay = 200;
 		bullets = new ArrayList<Bullet>();
 		timeStart = System.currentTimeMillis();
+		isGameOver = false;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -113,6 +115,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 				{
 					timeEnd = System.currentTimeMillis();
 					System.out.println("Game over! You survived for " +((timeEnd-timeStart)/1000)+ " seconds.");
+					isGameOver = true;
 					System.exit(0);
 				}
 			}

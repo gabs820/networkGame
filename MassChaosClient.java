@@ -63,7 +63,18 @@ public class MassChaosClient
 				//clientSocket.receive(receivePacket);
 				//modifiedSentence = new String(receivePacket.getData());
 				//System.out.println(modifiedSentence);
+				
+				if (listener.isGameOver == true) {
+				System.out.println("it works");
+				//toSend = "BYE";
+				//System.out.println(toSend);
+				//sendData = toSend.getBytes();
+				//sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+				//clientSocket.send(sendPacket);
+				}
 			}
+			
+			
 		  //clientSocket.close();
 	}
 	
