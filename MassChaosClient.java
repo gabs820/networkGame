@@ -42,22 +42,29 @@ public class MassChaosClient
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setSize(800,600);		  
-			int[] getPosition = new int[2];
-			getPosition[0] = listener.x;
-			getPosition[1] = listener.y;
-			String toSend = getPosition[0]+","+getPosition[1]+";";
-			//System.out.println(toSend);
-			sendData = toSend.getBytes();
-			sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
-			clientSocket.send(sendPacket);
-			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			clientSocket.receive(receivePacket);
-			String modifiedSentence = new String(receivePacket.getData());
-			System.out.println(modifiedSentence);
-			clientSocket.receive(receivePacket);
-			modifiedSentence = new String(receivePacket.getData());
-			System.out.println(modifiedSentence);
-		  clientSocket.close();
+			while(true)
+			{
+				int[] getPosition = new int[2];
+				getPosition[0] = listener.x;
+				getPosition[1] = listener.y;
+				String toSend = getPosition[0]+","+getPosition[1]+",";
+				//System.out.println(toSend);
+				sendData = toSend.getBytes();
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+				clientSocket.send(sendPacket);
+				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				clientSocket.receive(receivePacket);
+				String modifiedSentence = new String(receivePacket.getData());
+				String[] mS = modifiedSentence.split(",");
+				int xP = Integer.parseInt(mS[0]);
+				int yP = Integer.parseInt(mS[1]);
+				listener.newPos(xP,yP);
+				//System.out.println(xP+ "  "+yP);
+				//clientSocket.receive(receivePacket);
+				//modifiedSentence = new String(receivePacket.getData());
+				//System.out.println(modifiedSentence);
+			}
+		  //clientSocket.close();
 	}
 	
 	/*public static void main(String[] args)

@@ -1,4 +1,3 @@
-// Edited from Source: https://www.youtube.com/watch?v=p9Y-NBg8eto
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,6 +26,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	int firingAngle=0; //sets bullet direction to equal player direction
 	double timeStart;
 	double timeEnd;
+	public static ArrayList<int[]> others;
 	
 	public MyKeyListener() {
 		x = (int)(Math.random() * 750 + 1); //generates a random starting position.
@@ -62,28 +62,22 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 				bullets.remove(i);
 			}
 		}
-	}
-		public void paintComponentOtherPlayers(Graphics g) {
-		//paint the other players
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.fillOval(x2, y2, 30, 30);
-
-		//paint each bullet
-		for (int i = 0; i < bullets.size(); ++i) {
-			Bullet b = (Bullet)bullets.get(i);
-			if(b.isVisible())
-			{
-				g.fillOval(b.getX(), b.getY(), 10, 10);
-			}
-			if(!b.isVisible()) // deletes bullet out of array list.
-			{
-				bullets.remove(i);
-			}
+				for (int a = 0; a < others.size(); ++a) {
+			int[] opo = (int[])others.get(a);
+			g.fillOval(opo[0], opo[1], 30, 30);
+			
 		}
 	}
+
+	public void newPos(int pX, int pY)
+	{
+		others = new ArrayList<int[]>();
+		int[] nP = new int[2];
+		nP[0] = pX;
+		nP[1] = pY;
+		others.add(nP);
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		       
 		if(x<750)
