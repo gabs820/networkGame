@@ -46,15 +46,17 @@ public class MassChaosClient
 			getPosition[0] = listener.x;
 			getPosition[1] = listener.y;
 			String toSend = getPosition[0]+","+getPosition[1]+";";
+			//System.out.println(toSend);
 			sendData = toSend.getBytes();
 			sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
-						  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			  clientSocket.receive(receivePacket);
-			  String modifiedSentence = new String(receivePacket.getData());
-			  System.out.println(modifiedSentence);
-			  			  clientSocket.receive(receivePacket);
-			  modifiedSentence = new String(receivePacket.getData());
-			  System.out.println(modifiedSentence);
+			clientSocket.send(sendPacket);
+			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			clientSocket.receive(receivePacket);
+			String modifiedSentence = new String(receivePacket.getData());
+			System.out.println(modifiedSentence);
+			clientSocket.receive(receivePacket);
+			modifiedSentence = new String(receivePacket.getData());
+			System.out.println(modifiedSentence);
 		  clientSocket.close();
 	}
 	
