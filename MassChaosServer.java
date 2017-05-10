@@ -10,24 +10,47 @@ public class MassChaosServer {
 	
 	public static void main (String args[]) throws Exception {
 		
-		DatagramSocket serverSocket = new DatagramSocket(9876);
+		DatagramSocket serverSocket = null;
 		
 		byte[] receiveData = new byte[1024];
 		byte[] sendData = new byte[1024];
+		InetAddress IPAddress = null, IPAddress1 = null, IPAddress2 = null;
+		DatagramPacket receivePacket = null;
+		DatagramPacket sendPacket = null;
+		int port = 0, port1 = 0, port2 = 0;
+		
+		try
+		{
+			serverSocket = new DatagramSocket(9876);
+		}
+	
+	catch(Exception e)
+		{
+			System.out.println("Failed to open UDP socket");
+			System.exit(0);
+		}
+
+		
 		
 		while(true)
 		{
-			DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			receivePacket = new DatagramPacket(receiveData, receiveData.length);
 			serverSocket.receive(receivePacket);
 			String sentence = new String(receivePacket.getData());
-			InetAddress IPAddress = receivePacket.getAddress();
-			int port = receivePacket.getPort();
-				String capitalizedSentence = sentence.toUpperCase();
+			IPAddress = receivePacket.getAddress();
+			
+			IPAddress1 = receivePacket.getAddress();
+			port1 = receivePacket.getPort();
+			
+			 
+			//int port = receivePacket.getPort();
+			//String capitalizedSentence = sentence.toUpperCase();
 			sendData = capitalizedSentence.getBytes();
 			
 			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 			serverSocket.send(sendPacket);
 		}
+		
 	}
 		
 }

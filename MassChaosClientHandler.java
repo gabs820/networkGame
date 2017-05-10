@@ -19,10 +19,11 @@ import java.net.UnknownHostException;
 public class MassChaosClientHandler implements Runnable
 {
 	private Socket connectionSock = null;
-	private ArrayList<Socket> socketList;
+	//private ArrayList<Socket> socketList;
 
 
-	MassChaosClientHandler(Socket sock, ArrayList<Socket> socketList)
+	//MassChaosClientHandler(Socket sock, ArrayList<Socket> socketList)
+	MassChaosClientHandler(Socket sock)
 	{
 		this.connectionSock = sock;
 		this.socketList = socketList;
