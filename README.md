@@ -27,6 +27,17 @@ Created FrameDemo.java
 
 DOCUMENTATION
 
+***Compiling***
+1. To host a server:
+  -Compile and run MassChaosServer.java using the following commands in command prompt:
+  -"> javac MassChaosServer.java"
+  -"> java MassChaosServer"
+2. To connect as a client:
+  -Compile and run MassChaosClient.java using the following commands:
+    "> javac MassChaosClient.java"
+    "> java MassChaosClient"
+    
+
 ***Overview***
 Mass Chaos is a multiplayer game that connects players through a network service. The goal of the game is to remain alive as long as possible, along with eliminating as many players as possible. Currently, there is no limit on the amount of players that can connect.
 
