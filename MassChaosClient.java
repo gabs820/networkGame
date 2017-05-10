@@ -20,6 +20,7 @@ public class MassChaosClient
 		  clientSocket.receive(receivePacket);
 		  String modifiedSentence = new String(receivePacket.getData());
 		  System.out.println("FROM SERVER:" + modifiedSentence);
+		  MoveBall game = new MoveBall();
 		  clientSocket.close();
 	}
 	

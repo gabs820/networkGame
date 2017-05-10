@@ -4,7 +4,8 @@ import javax.swing.JFrame;
 import java.util.*;
 public class MoveBall {
 	
-	public static void main(String[] args) {
+	public MoveBall()
+	{
 		JFrame frame = new JFrame();
 		MyKeyListener listener = new MyKeyListener();
 		frame.add(listener);
