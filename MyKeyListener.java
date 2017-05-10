@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.Random;
 public class MyKeyListener extends JPanel implements ActionListener, KeyListener {
 
-
+	//initialize variables
 	Timer t = new Timer(5, this);
 	int x = 0, y = 0;
 	int x2 = 0, y2 = 0;
@@ -46,6 +46,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		othersBullets = new ArrayList<int[]>();
 	}
 	
+	//this function updates the screen
 	public void paintComponent(Graphics g) {
 		//paint the player
         super.paintComponent(g);
@@ -66,17 +67,22 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 				bullets.remove(i);
 			}
 		}
-				for (int a = 0; a < others.size(); ++a) {
+		
+		//paint the other player
+		for (int a = 0; a < others.size(); ++a) {
 			int[] opo = (int[])others.get(a);
 			g.fillOval(opo[0], opo[1], 30, 30);
 			
 		}
-					for (int bb = 0;bb < othersBullets.size(); ++bb) {
+		
+		//paint other player's bullets
+		for (int bb = 0;bb < othersBullets.size(); ++bb) {
 			int[] opob = (int[])othersBullets.get(bb);
 			g.fillOval(opob[0], opob[1], 10, 10);	
 		}
 	}
 
+	//retrieve positions of other players for painting
 	public void newPos(int pX, int pY)
 	{
 		others = new ArrayList<int[]>();
@@ -86,12 +92,13 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		others.add(nP);
 	}
 	
-	
-		public void bullPos(ArrayList<int[]> in)
+	//retrieve positions of others' bullets for painting
+	public void bullPos(ArrayList<int[]> in)
 	{
 		othersBullets = in;
 	}
 	
+	//method for retrieving others' bullets
 	public String getBullets()
 	{
 		String bString = "B,";
@@ -102,6 +109,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		return bString;
 	}
 	
+	//update position
 	public void actionPerformed(ActionEvent e) {
 		       
 		if(x<750)
@@ -120,6 +128,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		{
 				y-=velY;
 		}
+		//shooting function
 		if(shooting){
 			double elapsed = (System.nanoTime() - firingTimer) /1000000;
 			//Balance out the shooting rate.
@@ -128,6 +137,8 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 			firingTimer = System.nanoTime();
 		}
 		}
+		
+		//if hit by any bullet, end game
 		if(bullets.size()>0)
 		{
 			for(int i = 0; i < bullets.size(); i++){
@@ -159,7 +170,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		repaint();
 	}
 	
-	// For some reason negative velocity seems to be faster??
+	// player velocity based on direction you're going.
 	public void up() {
 		velY = -0.5;
 		velX = 0;
@@ -181,6 +192,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		firingAngle = 0;
 	} 
 	
+	//methods for getting keyboard input
 	public void keyPressed(KeyEvent e){
 		int code = e.getKeyCode();
 		if (code == KeyEvent.VK_UP) {
@@ -250,6 +262,7 @@ class Bullet extends JPanel {
 		return visible;
 	}
 	
+	//display bullet
 	public void update(){
 		x += dx*2; //bullet moves twice the speed of the player.
 		y += dy*2;
@@ -263,7 +276,5 @@ class Bullet extends JPanel {
 		{
 			visible = false;
 		}
-		
 	}
-	
 }
