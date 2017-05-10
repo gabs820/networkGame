@@ -12,7 +12,8 @@ public class MassChaosServer {
 		
 		DatagramSocket serverSocket = null;
 		
-		byte[] receiveData = new byte[1024];
+		
+		//byte[] receiveData = new byte[1024];
 		byte[] sendData = new byte[1024];
 		InetAddress IPAddress = null, IPAddress1 = null, IPAddress2 = null;
 		DatagramPacket receivePacket = null;
@@ -34,8 +35,10 @@ public class MassChaosServer {
 		
 		while(true)
 		{
+			byte[] receiveData = new byte[1024];
 			if (port == 0)
 			{
+				System.out.println("Server is running. Waiting for players to connect.");
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
@@ -55,6 +58,7 @@ public class MassChaosServer {
 			}
 			else if (port != 0 && port1 == 0)
 			{
+				System.out.println("Player 1 has connected.");
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
@@ -75,7 +79,8 @@ public class MassChaosServer {
 				serverSocket.send(sendPacket);
 			}
 			else
-			{
+			{	
+				System.out.println("Player 2 has connected.");
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
