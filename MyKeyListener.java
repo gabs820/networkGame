@@ -28,6 +28,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 	double timeEnd;
 	public static ArrayList<int[]> others;
 	boolean isGameOver;
+	public ArrayList<int[]> othersBullets;
 	
 	public MyKeyListener() {
 		x = (int)(Math.random() * 750 + 1); //generates a random starting position.
@@ -42,6 +43,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		bullets = new ArrayList<Bullet>();
 		timeStart = System.currentTimeMillis();
 		isGameOver = false;
+		othersBullets = new ArrayList<int[]>();
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -69,6 +71,10 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 			g.fillOval(opo[0], opo[1], 30, 30);
 			
 		}
+					for (int bb = 0;bb < othersBullets.size(); ++bb) {
+			int[] opob = (int[])othersBullets.get(bb);
+			g.fillOval(opob[0], opob[1], 10, 10);	
+		}
 	}
 
 	public void newPos(int pX, int pY)
@@ -78,6 +84,22 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		nP[0] = pX;
 		nP[1] = pY;
 		others.add(nP);
+	}
+	
+	
+		public void bullPos(ArrayList<int[]> in)
+	{
+		othersBullets = in;
+	}
+	
+	public String getBullets()
+	{
+		String bString = "B,";
+		for (int i = 0; i < bullets.size(); ++i) {
+			Bullet b = (Bullet)bullets.get(i);
+			bString += (b.getX()+","+b.getY()+",");
+		}
+		return bString;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
