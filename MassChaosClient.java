@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.net.*;
 import java.io.*;
+import javax.swing.JFrame;
 
 public class MassChaosClient
 {
@@ -34,7 +35,26 @@ public class MassChaosClient
 		  }
 		  //System.out.println("FROM SERVER:" + modifiedSentence);
 		  System.out.println("FROM SERVER: CONNECTION ESTABLISHED!");
-		  MoveBall game = new MoveBall();
+		  //MoveBall game = new MoveBall();
+			JFrame frame = new JFrame();
+			MyKeyListener listener = new MyKeyListener();
+			frame.add(listener);
+			frame.setVisible(true);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setSize(800,600);		  
+			int[] getPosition = new int[2];
+			getPosition[0] = listener.x;
+			getPosition[1] = listener.y;
+			String toSend = getPosition[0]+","+getPosition[1]+";";
+			sendData = toSend.getBytes();
+			sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+						  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+			  clientSocket.receive(receivePacket);
+			  String modifiedSentence = new String(receivePacket.getData());
+			  System.out.println(modifiedSentence);
+			  			  clientSocket.receive(receivePacket);
+			  modifiedSentence = new String(receivePacket.getData());
+			  System.out.println(modifiedSentence);
 		  clientSocket.close();
 	}
 	

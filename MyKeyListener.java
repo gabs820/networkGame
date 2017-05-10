@@ -17,6 +17,7 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 
 	Timer t = new Timer(5, this);
 	int x = 0, y = 0;
+	int x2 = 0, y2 = 0;
 	double velX = 0, velY = 0;
 	boolean shooting;
 	double firingTimer;
@@ -62,7 +63,27 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 			}
 		}
 	}
-	
+		public void paintComponentOtherPlayers(Graphics g) {
+		//paint the other players
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.fillOval(x2, y2, 30, 30);
+
+		//paint each bullet
+		for (int i = 0; i < bullets.size(); ++i) {
+			Bullet b = (Bullet)bullets.get(i);
+			if(b.isVisible())
+			{
+				g.fillOval(b.getX(), b.getY(), 10, 10);
+			}
+			if(!b.isVisible()) // deletes bullet out of array list.
+			{
+				bullets.remove(i);
+			}
+		}
+	}
 	public void actionPerformed(ActionEvent e) {
 		       
 		if(x<750)

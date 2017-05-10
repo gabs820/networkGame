@@ -53,7 +53,7 @@ public class MassChaosServer {
 				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
 				serverSocket.send(sendPacket);
 			}
-			else
+			else if (port != 0 && port1 == 0)
 			{
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
@@ -74,6 +74,19 @@ public class MassChaosServer {
 				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress1, port1);
 				serverSocket.send(sendPacket);
 			}
+			else
+			{
+				receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				serverSocket.receive(receivePacket);
+				String sentence = new String(receivePacket.getData());
+				System.out.println(sentence);
+				sendData = sentence.getBytes();
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+				serverSocket.send(sendPacket);
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress1, port1);
+				serverSocket.send(sendPacket);
+				
+			} 
 		}
 		
 	}
