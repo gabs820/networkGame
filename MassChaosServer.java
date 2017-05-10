@@ -34,21 +34,46 @@ public class MassChaosServer {
 		
 		while(true)
 		{
-			receivePacket = new DatagramPacket(receiveData, receiveData.length);
-			serverSocket.receive(receivePacket);
-			String sentence = new String(receivePacket.getData());
-			IPAddress = receivePacket.getAddress();
-			
-			IPAddress1 = receivePacket.getAddress();
-			port1 = receivePacket.getPort();
-			
-			 
-			//int port = receivePacket.getPort();
-			//String capitalizedSentence = sentence.toUpperCase();
-			sendData = capitalizedSentence.getBytes();
-			
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-			serverSocket.send(sendPacket);
+			if (port == 0)
+			{
+				receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				serverSocket.receive(receivePacket);
+				String sentence = new String(receivePacket.getData());
+				IPAddress = receivePacket.getAddress();
+				port = receivePacket.getPort();
+				//IPAddress1 = receivePacket.getAddress();
+				//port1 = receivePacket.getPort();
+				
+				 
+				//int port = receivePacket.getPort();
+				//String capitalizedSentence = sentence.toUpperCase();
+				String capitalizedSentence = "NO";
+				sendData = capitalizedSentence.getBytes();
+				
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+				serverSocket.send(sendPacket);
+			}
+			else
+			{
+				receivePacket = new DatagramPacket(receiveData, receiveData.length);
+				serverSocket.receive(receivePacket);
+				String sentence = new String(receivePacket.getData());
+				IPAddress1 = receivePacket.getAddress();
+				port1 = receivePacket.getPort();
+				//IPAddress1 = receivePacket.getAddress();
+				//port1 = receivePacket.getPort();
+				
+				 
+				//int port = receivePacket.getPort();
+				//String capitalizedSentence = sentence.toUpperCase();
+				String capitalizedSentence = "YES";
+				sendData = capitalizedSentence.getBytes();
+				
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+				serverSocket.send(sendPacket);
+				sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress1, port1);
+				serverSocket.send(sendPacket);
+			}
 		}
 		
 	}
