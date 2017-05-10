@@ -86,6 +86,12 @@ public class MassChaosServer {
 				receivePacket = new DatagramPacket(receiveData, receiveData.length);
 				serverSocket.receive(receivePacket);
 				String sentence = new String(receivePacket.getData());
+				
+				if (sentence.trim().equals("BYE")) {
+					serverSocket.close();
+					break;
+				}
+				
 				System.out.println(sentence);
 				sendData = sentence.getBytes();
 				int portTemp = receivePacket.getPort();
@@ -100,6 +106,7 @@ public class MassChaosServer {
 					sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress1, port1);
 					serverSocket.send(sendPacket);
 				}
+				
 				
 			} 
 		}
