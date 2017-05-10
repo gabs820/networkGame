@@ -93,7 +93,7 @@ public class MassChaosServer {
 					break;
 				}
 				
-				System.out.println(sentence);
+				//System.out.println(sentence);
 				sendData = sentence.getBytes();
 				int portTemp = receivePacket.getPort();
 				

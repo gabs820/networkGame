@@ -145,7 +145,6 @@ public class MyKeyListener extends JPanel implements ActionListener, KeyListener
 		if(othersBullets.size()>0)
 		{
 			for(int i = 0; i < othersBullets.size(); i++){
-				othersBullets.get(i).update();
 				if( othersBullets.get(i)[0] < (x+15) && othersBullets.get(i)[0] > (x-15) 
 					&& othersBullets.get(i)[1] < (y+15) && othersBullets.get(i)[1] > (y-15) )
 				{

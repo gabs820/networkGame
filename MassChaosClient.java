@@ -24,7 +24,7 @@ public class MassChaosClient
 			  DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
 			  clientSocket.receive(receivePacket);
 			  String modifiedSentence = new String(receivePacket.getData());
-			  System.out.println(modifiedSentence);
+			  //System.out.println(modifiedSentence);
 			  if (modifiedSentence.trim().equals("YES"))
 			  {
 				  break;
@@ -70,7 +70,7 @@ public class MassChaosClient
 						int[] tempB = new int[2];
 						tempB[0] = Integer.parseInt(mS[i]);
 						tempB[1] = Integer.parseInt(mS[i+1]);
-						System.out.println(mS[i]+" "+mS[i+1]);
+						//System.out.println(mS[i]+" "+mS[i+1]);
 						bArr.add(tempB);
 					}
 					listener.bullPos(bArr);
@@ -86,7 +86,7 @@ public class MassChaosClient
 				if (listener.isGameOver == true) {
 					//System.out.println("it works");
 					toSend = "BYE";
-					System.out.println(toSend);
+					//System.out.println(toSend);
 					sendData = toSend.getBytes();
 					sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
 					clientSocket.send(sendPacket);
